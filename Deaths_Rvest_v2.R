@@ -3,7 +3,6 @@ library(XML)
 library(stringr)
 library(rvest)
 library(lubridate)
-library(tidyverse)
 
 df<-data.frame(Name=integer(),Age=integer(),comment=character(),Nation=character(),Month=character(),Year=integer())
 
@@ -104,26 +103,14 @@ for(i in 2005:thisYear) {
   print("Done")
 }
 
+# a little more cleanup
 df$Name<-as.character(df$Name)
 df$Comment<-as.character(df$Comment)
 df <- df %>%
   filter(Name!="List of deaths By year") %>%
   filter(Name!="Lists of deaths by year")
 
-
-
+# write out files to use later
 write.csv(df,"DeathData.csv")
 save(df,file = "DeathData.rda")
-
-
-# 
-# df$dDate<-as.Date(df$chDate,"%B %d, %Y")
-# df$gMonth<-month(df$dDate)
-# 
-# ###########################################
-# library(ggplot2)
-# gg<-ggplot(df[df$venue=="BB&T Ballpark",],aes(x=temp,y=attend,color=month.name[gMonth]))
-# gg<-gg+geom_point() 
-# gg<-gg+scale_color_discrete(name="Month", labels=month.name)
-# gg
 
